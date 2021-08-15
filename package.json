@@ -1,5 +1,5 @@
 {
-    "name": "on-record",
+    "name": "on-clap",
     "version": "0.1.0",
     "dependencies": {
         "@types/dom-mediacapture-record": "^1.0.10"
