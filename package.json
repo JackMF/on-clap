@@ -4,6 +4,7 @@
     "dependencies": {
         "@types/dom-mediacapture-record": "^1.0.10"
     },
+    "main": "index.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/JackMF/on-clap"

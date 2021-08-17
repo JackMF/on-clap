@@ -1,4 +1,6 @@
-import {isClap} from './helpers'
+
+
+import ClapDetectorNode from './workletnode'
 
 type AdditionalConditions = () => boolean;
 type OnClapCallBack = () => void;
@@ -25,42 +27,43 @@ const makeUserMediaOptions = (inputDeviceId:string):MediaStreamConstraints =>{
 }
 
 const onClap = async(onClapCallBack: OnClapCallBack, 
-               sensitivty:number = 1.0,
+    sensitivity:number = 1.0,
                additionalConditions:AdditionalConditions = () => true, 
                ctx:AudioContext = new AudioContext(), 
                repeat:boolean=false,
                inputDeviceId:string="default") => {
 
     const options = makeUserMediaOptions(inputDeviceId)
-    ctx.resume()
     const audioStream = await navigator.mediaDevices.getUserMedia(options);
     const audioSourceNode = ctx.createMediaStreamSource(audioStream);
-    onClapAudioNode(audioSourceNode, onClapCallBack, sensitivty, additionalConditions, ctx, repeat)
+    onClapAudioNode(audioSourceNode, onClapCallBack, sensitivity, additionalConditions, ctx, repeat)
 
     }
 
-
-export const onClapAudioNode = (audioSourceNode:MediaStreamAudioSourceNode, 
-                onClapCallBack: OnClapCallBack, 
-                sensitivty:number = 1.0,
-                additionalConditions:AdditionalConditions = () => true, 
-                ctx:AudioContext = new AudioContext(), 
-                repeat:boolean=false) => {
+export const onClapAudioNode = async(audioSourceNode:MediaStreamAudioSourceNode, 
+            onClapCallBack: OnClapCallBack, 
+            sensitivity:number = 1.0,
+            additionalConditions:AdditionalConditions = () => true, 
+            ctx:AudioContext = new AudioContext(), 
+            repeat:boolean=false) => {
 
         ctx.resume()
-        const scriptNode = ctx.createScriptProcessor(256, 1, 1);
-        scriptNode.onaudioprocess = (event) => {
-            const raw = event.inputBuffer.getChannelData(0);
-            if (isClap(raw, sensitivty) && additionalConditions()) {
+        await ctx.audioWorklet.addModule("audio_worklet.js")
+        const clapDetectorNode = new ClapDetectorNode(ctx);
+        
+        let sensitivityParam = clapDetectorNode.parameters.get("sensitivity");
+        sensitivityParam.setValueAtTime(sensitivity, ctx.currentTime);
+        clapDetectorNode.port.onmessage = (e) => {
+            if (e.data.type === "clap" && additionalConditions()) {
                 onClapCallBack()
                 if(!repeat) {
-                    scriptNode.disconnect()
+                    clapDetectorNode.disconnect()
                 } 
+            }            
 
-            } 
         }
-        audioSourceNode.connect(scriptNode);
-        scriptNode.connect(ctx.destination);
+        audioSourceNode.connect(clapDetectorNode);
+        clapDetectorNode.connect(ctx.destination);
     }
 
 export default onClap;
