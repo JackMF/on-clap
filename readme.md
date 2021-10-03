@@ -22,7 +22,7 @@ with yarn:
 This will ask the user for access to thier microphone as it uses [MediaDevices.getUserMedia()](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
 
 ```js
-import onClap from `on-clap`;
+import {onClap} from `on-clap`;
 
 
 let data = Array.from({length: 1024}, Math.random)
