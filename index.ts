@@ -1,4 +1,4 @@
-type OnClapCallBack = () => void;
+type OnClapCallBack = () => any;
 
 interface Options {
     ctx?: AudioContext
@@ -18,7 +18,7 @@ declare global {
 
 export const onClap = async(
                 onClapCallBack: OnClapCallBack,
-                options:Options ={}
+                options:Options = {}
                ) => {
 
     const ctx = options.ctx || new AudioContext();
@@ -31,10 +31,10 @@ export const onClap = async(
 
     onClapAudioNode(audioSourceNode, onClapCallBack, options)
 
-    }
+}
 
 export const onClapAudioNode = (
-                audioSourceNode:MediaStreamAudioSourceNode, 
+                audioNode:AudioNode, 
                 onClapCallBack: OnClapCallBack, 
                 options:Options) => {
 
@@ -52,14 +52,14 @@ export const onClapAudioNode = (
                 onClapCallBack();
                 if(!repeat) {
                     scriptNode.disconnect();
-                    audioSourceNode.disconnect();
+                    audioNode.disconnect();
                 } 
 
             } 
         }
-        audioSourceNode.connect(scriptNode);
+        audioNode.connect(scriptNode);
         scriptNode.connect(ctx.destination);
-    }
+}
 
 export const isClap = (rawAudio:Float32Array, sensitivty:number): boolean => {
     return rawAudio.some(
@@ -70,8 +70,7 @@ export const isClap = (rawAudio:Float32Array, sensitivty:number): boolean => {
 }
 
 
-
-const makeUserMediaOptions = (inputDeviceId:string):MediaStreamConstraints =>{
+const makeUserMediaOptions = (inputDeviceId:string):MediaStreamConstraints => {
     return {
         "audio": {
             "deviceId":inputDeviceId,
