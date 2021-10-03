@@ -48,10 +48,10 @@ import {onClapAudioNode} from 'on-clap';
 onClapAudioNode(someExistingAudioNode, () => console.log("there was a clap"))
 
 ```
-the above options can also be passed on like in onClap.
+the options from above can also be passed on:
 
 ```js
-...
+
 onClapAudioNode(someExistingAudioNode, () => console.log("there was a clap"), options)
 
 ```
