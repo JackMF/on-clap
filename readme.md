@@ -42,7 +42,7 @@ onClap(() => console.log("there was a clap"), options);
 ```
 ### Listening for claps on an existing AudioNode
 if you have a pre-existing [AudioNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode) you would like to listen for claps you can use
-`onClapAudioNode`:
+the `onClapAudioNode` function:
 ```js
 import {onClapAudioNode} from 'on-clap';
 onClapAudioNode(someExistingAudioNode, () => console.log("there was a clap"))
