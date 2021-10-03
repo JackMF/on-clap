@@ -30,7 +30,7 @@ onClap(() => console.log("there was a clap!"))
 An options object can also be passed to `onClap`:
 ```js
 import {onClap} from 'on-clap';
-options = {
+const options = {
     sens: 1.5, // how loud a clap we need to hear to trigger the call back. Bigger is more sensitive. Default = 1
     repeat: false, //If you want on clap to trigger multiple times or only once. Default = false.
     additionalConditions: () => 2 == 2, //A function which returns true if some additional conditions are met. Default = () => true.
@@ -41,7 +41,7 @@ options = {
 onClap(() => console.log("there was a clap"), options);
 ```
 ### Listening for claps on an existing AudioNode
-if you have a pre-existing [AudioNode] (https://developer.mozilla.org/en-US/docs/Web/API/AudioNode) you would like to listen for claps you can use
+if you have a pre-existing [AudioNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode) you would like to listen for claps you can use
 `onClapAudioNode`:
 ```js
 import {onClapAudioNode} from 'on-clap';
