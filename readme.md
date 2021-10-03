@@ -17,7 +17,7 @@ with yarn:
 
 ### Usage
 
-#### basic usage.
+#### Basic Usage
 in its most basic usage you pass a callback function to be called after a clap is heard:
 
 ```js
@@ -26,7 +26,7 @@ onClap(() => console.log("there was a clap!"))
 ```
 **Note** this will ask the user for access to thier microphone as it uses [MediaDevices.getUserMedia()](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) under the hood.
 
-#### options.
+#### Options
 An options object can also be passed to `onClap`:
 ```js
 import {onClap} from `on-clap`;
@@ -40,7 +40,7 @@ options = {
 
 onClap(() => console.log("there was a clap"), options);
 ```
-#### Listening for claps on an existing AudioNode.
+#### Listening for claps on an existing AudioNode
 if you have a pre-existing [AudioNode] (https://developer.mozilla.org/en-US/docs/Web/API/AudioNode) you would like to listen for claps you can use
 `onClapAudioNode`:
 ```js
