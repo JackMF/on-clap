@@ -1,5 +1,3 @@
-import {isClap} from './helpers'
-
 type AdditionalConditions = () => boolean;
 type OnClapCallBack = () => void;
 
@@ -24,7 +22,7 @@ const makeUserMediaOptions = (inputDeviceId:string):MediaStreamConstraints =>{
     };
 }
 
-const onClap = async(onClapCallBack: OnClapCallBack, 
+export const onClap = async(onClapCallBack: OnClapCallBack, 
                sensitivty:number = 1.0,
                additionalConditions:AdditionalConditions = () => true, 
                ctx:AudioContext = new AudioContext(), 
@@ -39,14 +37,12 @@ const onClap = async(onClapCallBack: OnClapCallBack,
 
     }
 
-
 export const onClapAudioNode = (audioSourceNode:MediaStreamAudioSourceNode, 
                 onClapCallBack: OnClapCallBack, 
                 sensitivty:number = 1.0,
                 additionalConditions:AdditionalConditions = () => true, 
                 ctx:AudioContext = new AudioContext(), 
                 repeat:boolean=false) => {
-
         ctx.resume()
         const scriptNode = ctx.createScriptProcessor(256, 1, 1);
         scriptNode.onaudioprocess = (event) => {
@@ -63,5 +59,12 @@ export const onClapAudioNode = (audioSourceNode:MediaStreamAudioSourceNode,
         scriptNode.connect(ctx.destination);
     }
 
-export default onClap;
+export const isClap = (rawAudio:Float32Array, sensitivty:number): boolean => {
+    return rawAudio.some(
+        (rawAudio: number) => {
+            return Math.sqrt(rawAudio) >= 0.04 * sensitivty 
+        });
+
+}
+
 
