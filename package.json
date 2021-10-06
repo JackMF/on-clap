@@ -1,5 +1,7 @@
 {
     "name": "on-clap",
+    "types": "dist/index.d.ts",
+    "main":  "dist/index.js",
     "version": "0.1.2",
     "dependencies": {
         "@types/dom-mediacapture-record": "^1.0.10"
@@ -9,6 +11,16 @@
         "url": "https://github.com/JackMF/on-clap"
     },
     "description": "Do something when you hear a clap (or any loud noise)",
-    "keywords": ["clap", "audio", "microphone"],
-    "author": "Jack McKay Fletcher"
+    "keywords": [
+        "clap",
+        "audio",
+        "microphone"
+    ],
+    "scripts": {
+        "tsc": "tsc"
+    },
+    "author": "Jack McKay Fletcher",
+    "devDependencies": {
+        "typescript": "^4.4.3"
+    }
 }
