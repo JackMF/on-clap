@@ -16,11 +16,12 @@ declare global {
     }
   }
 
+
 export const onClap = async(
                 onClapCallBack: OnClapCallBack,
                 options:Options = {}
                ) => {
-
+                   
     const ctx = options.ctx || new AudioContext();
     const inputDeviceId = options.inputDeviceId || "default";
     ctx.resume();
@@ -29,7 +30,7 @@ export const onClap = async(
     const audioStream = await navigator.mediaDevices.getUserMedia(mediaOptions);
     const audioSourceNode = ctx.createMediaStreamSource(audioStream);
 
-    onClapAudioNode(audioSourceNode, onClapCallBack, options)
+    onClapAudioNode(audioSourceNode, onClapCallBack, {...options, "ctx":ctx})
 
 }
 
