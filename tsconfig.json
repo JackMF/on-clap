@@ -1,5 +1,5 @@
 {"compilerOptions": {
-    "lib": [ "es2018" ],
+    "lib": [ "es2018", "dom" ],
     "target": "es6",
     "module": "commonjs",
     "declaration": true,
@@ -7,6 +7,6 @@
     "outDir": "dist"
 },
 "exclude": ["node_modules"],
-"include": [""]
+"include": ["src"]
 
 }

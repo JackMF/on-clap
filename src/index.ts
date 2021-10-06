@@ -65,7 +65,7 @@ export const onClapAudioNode = (
 const isClap = (rawAudio:Float32Array, sensitivty:number): boolean => {
     return rawAudio.some(
         (rawAudio: number) => {
-            return Math.sqrt(rawAudio) >= 0.04 * sensitivty 
+            return Math.sqrt(rawAudio) >= 0.4 * sensitivty 
         });
 
 }
